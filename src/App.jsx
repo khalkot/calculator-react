@@ -1,55 +1,78 @@
 import { useState } from 'react'
 import './styles/index.css'
 
-function Display({ value }) {
-    return (
-        <div className="display">
-            {value}
-        </div>
-    );
+function Display({value}){
+  return (
+    <div className='display'>
+      {value}
+    </div>
+  )
 }
 
-function ButtonPanel({ onButtonClick }) {
-    const buttons = [
-        '7', '8', '9', '/',
-        '4', '5', '6', '*',
-        '1', '2', '3', '-',
-        '0', '.', '=', '+'
-    ];
+function ButtonPanel({onButtonClick}){
+  const buttons =  
+  ['AC', '%','+/-', '/',
+  '7', '8', '9', 'X',
+  '4', '5', '6', '+',
+  '1', '2', '3', '-',
+  '0', '.', '=']; // added missing operands and changed * to x and did a reorder
 
-    return (
-        <div className="button-panel">
-            {buttons.map((btn) => (
-                <button key={btn} onClick={() => onButtonClick(btn)}>
-                    {btn}
-                </button>
-            ))}
-        </div>
-    );
+  return(
+    <div className="button-panel">
+      {buttons.map((btn)=>( <button key={btn} onClick={()=>onButtonClick(btn)}>
+        {btn}
+      </button>
+      ))}
+    </div>
+  );
 }
 
 function App() {
-    const [input, setInput] = useState('');
+    const [input,setInput]=useState("");
 
     const handleButtonClick = (value) => {
-        if (value === '=') {
-            // Evaluate the expression
-            try {
-                setInput(eval(input).toString());
-            } catch (error) {
-                setInput('Error');
-            }
-        } else {
-            setInput(input + value);
+      switch (value) { // changed if condition to switch case to handle the added operands
+      case '=':{
+        try {
+          setInput(eval(input).toString());
         }
+        catch(error){
+          setInput('Error');
+        }
+        break;
+      }
+
+      case 'X': {
+        setInput(input + '*');
+        break;
+      }
+
+      case 'AC': {
+        setInput('');
+        break;
+      }
+
+      case '+/-': {
+        setInput((Number(input) * -1)); //fails when it encounters an operator (results into NaN)
+        break;
+      }
+
+
+
+      
+      default: {
+        setInput(input + value);
+        break;
+      } 
+    }
     };
 
     return (
-        <div className="calculator">
-            <Display value={input} />
-            <ButtonPanel onButtonClick={handleButtonClick} />
-        </div>
-    );
+    <div className='calculator'>
+    <Display value={input}/>
+    <ButtonPanel onButtonClick={handleButtonClick} />
+    </div>
+    )
 }
 
 export default App

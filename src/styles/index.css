@@ -4,13 +4,18 @@
     border: 1px solid #ccc;
     border-radius: 10px;
     overflow: hidden;
+
+    background-color: #000;
 }
 
 .display {
-    background: #f0f0f0;
     padding: 20px;
     font-size: 2em;
     text-align: right;
+    
+    height: 20px;
+    color: #ce9295;
+    background-color: #000;
 }
 
 .button-panel {
@@ -19,6 +24,12 @@
 }
 
 button {
-    padding: 20px;
+    padding: 15px;
     font-size: 1.5em;
+    
+    margin: 5px 5px 5px 5px ;
+
+    background-color: #383838;
+    color: #ccc;
+    border-radius: 100px;
 }
