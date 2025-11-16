@@ -17,9 +17,12 @@ function ButtonPanel({onButtonClick}){
   '1', '2', '3', '-',
   '0', '.', '=']; // added missing operands and changed * to x and did a reorder
 
+  const ids='a';
+
   return(
     <div className="button-panel">
-      {buttons.map((btn)=>( <button key={btn} onClick={()=>onButtonClick(btn)}>
+      {buttons.map((btn,index)=>( <button key={btn} id={String.fromCharCode(65 + index)} 
+      onClick={()=>onButtonClick(btn)}>
         {btn}
       </button>
       ))}
