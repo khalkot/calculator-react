@@ -1,30 +1,55 @@
 import { useState } from 'react'
 import './styles/index.css'
 
+function Display({ value }) {
+    return (
+        <div className="display">
+            {value}
+        </div>
+    );
+}
+
+function ButtonPanel({ onButtonClick }) {
+    const buttons = [
+        '7', '8', '9', '/',
+        '4', '5', '6', '*',
+        '1', '2', '3', '-',
+        '0', '.', '=', '+'
+    ];
+
+    return (
+        <div className="button-panel">
+            {buttons.map((btn) => (
+                <button key={btn} onClick={() => onButtonClick(btn)}>
+                    {btn}
+                </button>
+            ))}
+        </div>
+    );
+}
+
 function App() {
-  const [count, setCount] = useState(0)
+    const [input, setInput] = useState('');
 
-  return (
-    <>
-    <div className='border-row'>
-    <button>1</button>
-    <button>2</button>
-    <button>3</button>
-    </div>
-    
-    <div className='border-row'>
-    <button>4</button>
-    <button>5</button>
-    <button>6</button>
-    </div>
+    const handleButtonClick = (value) => {
+        if (value === '=') {
+            // Evaluate the expression
+            try {
+                setInput(eval(input).toString());
+            } catch (error) {
+                setInput('Error');
+            }
+        } else {
+            setInput(input + value);
+        }
+    };
 
-    <div className='border-row'>
-    <button>7</button>
-    <button>8</button>
-    <button>9</button>
-    </div>
-    </>
-  )
+    return (
+        <div className="calculator">
+            <Display value={input} />
+            <ButtonPanel onButtonClick={handleButtonClick} />
+        </div>
+    );
 }
 
 export default App
